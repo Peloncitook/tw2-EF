@@ -5,23 +5,48 @@ Este proyecto es un sistema web desarrollado en el framework CakePHP 5 diseñado
 
 ## Características Principales
 * **Seguridad y Autenticación:** Acceso restringido al sistema mediante el plugin de Authentication de CakePHP.
-* **Control de Roles (RBAC):** * **Administrador:** Acceso total al CRUD de usuarios, roles y todos los documentos del sistema.
-  * **Usuario Normal:** Interfaz restringida para  visualizar únicamente sus propios documentos (vera su documento que escaneo el que recepciono su documento), sin permisos de edición o eliminación para mantener la integridad del historial.
+* **Control de Roles:** * **Administrador:** Acceso total. Se encarga de registrar usuarios, digitalizar (subir) los archivos físicos al sistema, asignarlos al usuario correspondiente y gestionar el avance del trámite.
+  * **Usuario Normal:**  Acceso de solo lectura (Tracking). Interfaz estrictamente limitada a visualizar la lista de sus propios documentos y monitorear su estado, sin permisos de subida, edición ni eliminación.
 * **Gestión de Archivos Físicos:** Subida de documentos con renombramiento automático (timestamps) para evitar colisiones en el servidor.
 * **Estados de Flujo:** Seguimiento del ciclo de vida del documento (Recepcionado, Revisión, Aprobado, Rechazado).
 
 ## Tecnologías Utilizadas
 * **Framework:** CakePHP 5.x (Patrón MVC)
 * **Base de Datos:** MariaDB / MySQL
-* **Entorno:** Contenedores con Podman (Imagen `webdevops/php-apache:8.4` o `8.3`) en MiniOS Linux.
+* **Entorno:** Contenedores con Podman (Imagen `webdevops/php-apache:8.4`) en MiniOS Linux.
 * **Control de Versiones:** Git / GitHub
 
 ## Instrucciones de Instalación
 
+
 1. **Clonar el repositorio:**
-   ```bash
+
    git clone [https://github.com/Peloncitook/EF.git](https://github.com/Peloncitook/EF.git)
    cd EF
+
+2. **Instalar dependencias de Composer:**
+
+   composer install
+   
+3. **Configuración de Base de Datos:**
+
+Crear una base de datos llamada db_ef
+
+
+Configurar las credenciales en config/app_local.php.
+
+Crear las Migraciones
+
+bin/cake bake migration_snapshot InitialStructure
+
+
+4. **Cargar roles y usuario administrador inicial:**
+
+
+bin/cake migrations seed
+
+
+   
    
    Permisos de Escritura (Sistemas Linux/Contenedores):
 Es vital dar permisos a las carpetas temporales y de almacenamiento de archivos:
